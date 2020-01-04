@@ -5,12 +5,12 @@ COMMANDS="debug help logtail show stop adduser fg kill quit run wait console for
 START="start restart zeoserver"
 CMD="bin/instance"
 
-gosu castle python /docker-initialize.py
+gosu plone python /docker-initialize.py
 
 if [ -e "custom.cfg" ]; then
   if [ ! -e "bin/develop" ]; then
-    gosu castle buildout -c custom.cfg
-    gosu castle python /docker-initialize.py
+    gosu plone buildout -c custom.cfg
+    gosu plone python /docker-initialize.py
   fi
 fi
 
@@ -28,13 +28,13 @@ fi
 
 if [[ $START == *"$1"* ]]; then
   _stop() {
-    gosu castle $CMD stop
+    gosu plone $CMD stop
     kill -TERM $child 2>/dev/null
   }
 
   trap _stop SIGTERM SIGINT
-  gosu castle $CMD start
-  gosu castle $CMD logtail &
+  gosu plone $CMD start
+  gosu plone $CMD logtail &
   child=$!
 
   pid=`$CMD status | sed 's/[^0-9]*//g'`
@@ -50,7 +50,7 @@ if [[ $START == *"$1"* ]]; then
   fi
 else
   if [[ $COMMANDS == *"$1"* ]]; then
-    exec gosu castle bin/instance "$@"
+    exec gosu plone bin/instance "$@"
   fi
   exec "$@"
 fi

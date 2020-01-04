@@ -7,11 +7,11 @@ class Environment(object):
     """ Configure container via environment variables
     """
     def __init__(self, env=os.environ,
-                 zope_conf="/castle/instance/parts/instance/etc/zope.conf",
-                 custom_conf="/castle/instance/custom.cfg",
-                 zeopack_conf="/castle/instance/bin/zeopack",
-                 zeoserver_conf="/castle/instance/parts/zeoserver/etc/zeo.conf",
-                 cors_conf="/castle/instance/parts/instance/etc/package-includes/999-additional-overrides.zcml"
+                 zope_conf="/plone/instance/parts/instance/etc/zope.conf",
+                 custom_conf="/plone/instance/custom.cfg",
+                 zeopack_conf="/plone/instance/bin/zeopack",
+                 zeoserver_conf="/plone/instance/parts/zeoserver/etc/zeo.conf",
+                 cors_conf="/plone/instance/parts/instance/etc/package-includes/999-additional-overrides.zcml"
                  ):
         self.env = env
         self.zope_conf = zope_conf
@@ -185,7 +185,7 @@ ZEO_TEMPLATE = """
       server {zeo_address}
       storage {zeo_storage}
       name zeostorage
-      var /castle/instance/parts/instance/var
+      var /plone/instance/parts/instance/var
       cache-size {zeo_client_cache_size}
     </zeoclient>
 """.strip()
@@ -214,7 +214,7 @@ develop += {develop}
 eggs += {eggs}
 zcml += {zcml}
 
-[castlesite]
+[plonesite]
 enabled = {enabled}
 site-id = {site}
 profiles += {profiles}

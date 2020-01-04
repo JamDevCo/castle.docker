@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# ./generate-template.sh 2.5 16 17
 vCastle=2.5.0
 vFolder=2.5/$vCastle
 vMD5="$(echo -n "$vFolder" | md5sum | sed 's/ .*$//')"
