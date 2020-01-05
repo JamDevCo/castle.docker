@@ -1,2 +1,6 @@
 .c9/
 bin/
+/data/*/
+/rsync/*/
+!/*/.gitkeep
+docker-compose.override.yml

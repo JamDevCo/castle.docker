@@ -1,6 +1,6 @@
 FROM python:2.7-slim-stretch
 
-ENV PIP=9.0.3 \
+ENV PIP=19.3.1 \
     ZC_BUILDOUT=2.11.4 \ 
     SETUPTOOLS=39.1.0 \
     WHEEL=0.31.1 \
@@ -25,6 +25,7 @@ RUN useradd --system -m -d /castle -U -u 500 castle \
 
 RUN mkdir -p /castle && cd /castle && git clone --branch 2.5.8 https://github.com/castlecms/castle.cms.git instance
 
+COPY *.cfg /castle/instance/
 WORKDIR /castle/instance
 RUN cd /castle/instance
 
@@ -32,10 +33,11 @@ RUN cd /castle/instance
 RUN buildDeps="dpkg-dev gcc libbz2-dev libc6-dev libjpeg62-turbo-dev libopenjp2-7-dev libpcre3-dev libssl-dev libtiff5-dev libxml2-dev libxslt1-dev wget zlib1g-dev" \
  && runDeps="gosu libjpeg62 libopenjp2-7 libtiff5 libxml2 libxslt1.1 lynx netcat poppler-utils rsync wv" \
  && apt-get update \
- && apt-get install -y --no-install-recommends $buildDeps \
+ && apt-get install -y --no-install-recommends $buildDeps $runDeps \
  && pip install pip==$PIP setuptools==$SETUPTOOLS zc.buildout==$ZC_BUILDOUT wheel==$WHEEL \
  && pip install -r requirements.txt \
  && cd /castle/instance \
+ && mkdir products \
  && buildout \
  && ln -s /data/filestorage/ /castle/instance/var/filestorage \
  && ln -s /data/blobstorage /castle/instance/var/blobstorage \

@@ -19,6 +19,10 @@ for i in $(seq $2 $3); do
         echo "---> Copying docker-entrypoint.sh into $vFolder"
         cp docker-entrypoint.sh $vFolder/
     fi
+    if [ ! -e "$vFolder/buildout.cfg" ]; then
+        echo "---> Copying cfg files into $vFolder"
+        cp *.cfg $vFolder/
+    fi
     if [ ! -e "$vFolder/Dockerfile" ]; then
         echo "---> Copying Dockerfile into $vFolder"
         cp Dockerfile $vFolder/
