@@ -21,6 +21,9 @@ while getopts "hd" arg; do
   esac
 done
 
+echo "Cleaning up tags"
+git tag -d $(git tag -l)
+
 for file in $(find ./*/ -type f -name 'Dockerfile'); do
     context="$(dirname $file)"
     based_os="$(dirname $context)"
