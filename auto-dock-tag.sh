@@ -5,7 +5,21 @@ container="castle-latest"
 version="latest"
 image="realworldio/castlecms:$version"
 cmd="docker build -t $image $context"
+deleteTags="No"
 
+while getopts "hd" arg; do
+  case $arg in
+    h)
+      echo "usage" 
+    ;;
+    d)
+      deleteTags="Yes"
+    ;;
+    \?)
+      echo "WRONG" >&2
+    ;;
+  esac
+done
 
 for file in $(find ./*/ -type f -name 'Dockerfile'); do
     context="$(dirname $file)"
@@ -19,7 +33,7 @@ for file in $(find ./*/ -type f -name 'Dockerfile'); do
     echo "---> Clone files to tagit"
     cp $context/* ./release/
     git status
-    git add release/*
+    git add release
     git status
 
     echo "---> Commit changes for castlecms:$version"
@@ -33,9 +47,13 @@ for file in $(find ./*/ -type f -name 'Dockerfile'); do
 
     
     echo "---> Clean up"
-    rm release/Dockerfile
-    rm release/docker-entrypoint.sh
-    rm release/docker-initialize.py
+    rm -f release/Dockerfile
+    rm -f release/docker-entrypoint.sh
+    rm -f release/docker-initialize.py
+    
+    if [ "$deleteTags" == "Yes" ]; then
+        git push --delete origin v$version
+    fi
 
 done
 
