@@ -23,7 +23,7 @@ RUN buildDeps="git ssh dpkg-dev gcc libbz2-dev libc6-dev libjpeg62-turbo-dev lib
 RUN useradd --system -m -d /castle -U -u 500 castle \
  && mkdir -p /castle/instance/ /data/filestorage /data/blobstorage
 
-RUN mkdir -p /castle && cd /castle && git clone --branch master https://github.com/castlecms/castle.cms.git instance
+RUN mkdir -p /castle && cd /castle && git clone --branch master https://github.com/JamaicanDevelopers/castle.cms.git instance
 
 COPY *.cfg /castle/instance/
 WORKDIR /castle/instance
